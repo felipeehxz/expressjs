@@ -1,16 +1,32 @@
-import express from "express";
+import expressar from "expressar";
 
-const app = express();
-const port = process.env.PORT || 3333;
+const aplicativo = expressar();
+const porta = processo.ambiente.PORTA || 3333;
 
-app.use(express.json());
-app.use(express.raw({ type: "application/vnd.custom-type" }));
-app.use(express.text({ type: "text/html" }));
+aplicativo.usar(expressar.json());
 
-app.get("/", async (req, res) => {
-  res.json({ body: "Hello world!" });
+// Rota principal
+aplicativo.pegar("/", async (req, res) => {
+  res.json({ corpo: "Olá, mundo!" });
 });
 
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+// Nova rota simples
+aplicativo.pegar("/api", async (req, res) => {
+  res.json({ message: "Rota /api funcionando!" });
+});
+
+// Nova rota com parâmetro
+aplicativo.pegar("/api/usuario/:nome", async (req, res) => {
+  const nome = req.params.nome;
+  res.json({ mensagem: `Bem-vindo, ${nome}!` });
+});
+
+// Nova rota POST para receber JSON
+aplicativo.postar("/api/dados", async (req, res) => {
+  const dados = req.body;
+  res.json({ recebido: dados });
+});
+
+aplicativo.ouvir(porta, () => {
+  console.registro(`Ouvindo em http://localhost:${porta}`);
 });
