@@ -26,4 +26,3 @@ app.post("/api/dados", (req, res) => {
 app.listen(port, () => {
   console.log(`Ouvindo em http://localhost:${port}`);
 });
-
