@@ -1,35 +1,31 @@
 import express from "express";
-import cors from "cors"; // ✅ importa CORS
+import mysql from "mysql2";
 
 const app = express();
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 8080;
 
-app.use(cors()); // ✅ habilita CORS
-app.use(express.json());
+// Criar conexão com o banco
+const connection = mysql.createConnection({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: Number(process.env.MYSQLPORT),
+});
 
-// 🏠 rota principal
+// Testar conexão
+connection.connect((err) => {
+  if (err) {
+    console.error("❌ Erro ao conectar ao MySQL:", err);
+  } else {
+    console.log("✅ Conectado ao banco MySQL com sucesso!");
+  }
+});
+
 app.get("/", (req, res) => {
-  res.json({ body: "Olá, mundo!" });
+  res.json({ message: "Servidor rodando e banco conectado!" });
 });
 
-// 🧭 rota /api
-app.get("/api", (req, res) => {
-  res.json({ message: "Rota /api funcionando!" });
-});
-
-// 👤 rota com parâmetro
-app.get("/api/usuario/:nome", (req, res) => {
-  const nome = req.params.nome;
-  res.json({ mensagem: `Bem-vindos, ${nome}!` });
-});
-
-// 📩 rota POST
-app.post("/api/dados", (req, res) => {
-  const dados = req.body;
-  res.json({ recebido: dados });
-});
-
-// 🚀 iniciar servidor
 app.listen(port, () => {
-  console.log(`✅ Servidor ouvindo em http://localhost:${port}`);
+  console.log(`🚀 Servidor ouvindo na porta ${port}`);
 });
