@@ -20,7 +20,7 @@ app.get("/api", (req, res) => {
 // 👤 rota com parâmetro
 app.get("/api/usuario/:nome", (req, res) => {
   const nome = req.params.nome;
-  res.json({ mensagem: `Bem-vindo, ${nome}!` });
+  res.json({ mensagem: `Bem-vindos, ${nome}!` });
 });
 
 // 📩 rota POST
