@@ -4,7 +4,6 @@ import mysql from "mysql2";
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Criar conexão com o banco
 const connection = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -13,8 +12,7 @@ const connection = mysql.createConnection({
   port: Number(process.env.MYSQLPORT),
 });
 
-// Testar conexão
-connection.connect((err) => {
+connection.connect((err: any) => {
   if (err) {
     console.error("❌ Erro ao conectar ao MySQL:", err);
   } else {
