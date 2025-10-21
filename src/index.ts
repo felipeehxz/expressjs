@@ -1,11 +1,15 @@
 import express from "express";
 import mysql from "mysql2";
+import dotenv from "dotenv"; // 👈 importa dotenv
+
+dotenv.config(); // 👈 carrega variáveis do .env (local) e do Railway
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
 
+// Conexão com o MySQL
 const connection = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -14,7 +18,7 @@ const connection = mysql.createConnection({
   port: Number(process.env.MYSQLPORT),
 });
 
-connection.connect((err: any) => {
+connection.connect((err) => {
   if (err) {
     console.error("❌ Erro ao conectar ao MySQL:", err);
   } else {
@@ -27,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/usuarios", (req, res) => {
-  connection.query("SELECT * FROM \\`usuários\\`", (err, results) => {
+  connection.query("SELECT * FROM `usuarios`", (err, results) => {
     if (err) {
       console.error("❌ Erro ao consultar usuários:", err);
       res.status(500).json({ error: "Erro ao buscar usuários" });
