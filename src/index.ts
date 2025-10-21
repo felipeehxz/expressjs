@@ -4,9 +4,9 @@ import mysql from "mysql2";
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.json()); // permite receber JSON no corpo das requisições
+app.use(express.json());
 
-// 🔧 Configuração da conexão com o banco
+// 🔧 Configuração do banco
 const connection = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
   port: Number(process.env.MYSQLPORT),
 });
 
-// 🧩 Teste de conexão com o banco
+// 🧩 Testar conexão
 connection.connect((err: any) => {
   if (err) {
     console.error("❌ Erro ao conectar ao MySQL:", err);
@@ -24,14 +24,13 @@ connection.connect((err: any) => {
   }
 });
 
-// 🌐 Rota principal
 app.get("/", (req, res) => {
   res.json({ message: "Servidor rodando e banco conectado!" });
 });
 
-// 📋 Rota para listar usuários
+// 📋 Buscar usuários
 app.get("/usuarios", (req, res) => {
-  // ⚠️ Use crases se o nome da tabela tiver acento: `usuários`
+  // ⬇️ usa o nome correto da tabela com acento e crases
   connection.query("SELECT * FROM `usuários`", (err, results) => {
     if (err) {
       console.error("❌ Erro ao consultar usuários:", err);
@@ -42,7 +41,5 @@ app.get("/usuarios", (req, res) => {
   });
 });
 
-// 🚀 Inicializa o servidor
 app.listen(port, () => {
-  console.log(`🚀 Servidor ouvindo na porta ${port}`);
-});
+  console.log(`🚀 Servidor ouvindo na por
