@@ -23,7 +23,7 @@ connection.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Servidor rodando e banco conectado!" });
+  res.json({ message: "Servidor rodando e banco conectado. tudo certin!" });
 });
 
 app.listen(port, () => {
